@@ -5,7 +5,6 @@ using System.Collections;
  * A separate black overlay for the UI stuffs that adjusts accordingly depending on how many
  * times Show() has been called.
  * 
- * Created By: NeilDG
  */
 public class UIBlackOverlay : MonoBehaviour {
 

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 /*
  * Handles how views are being displayed in stack order.
  * 
- * Created By: NeilDG
  */ 
 public class ViewHandler : MonoBehaviour {
 
@@ -191,7 +190,7 @@ public class ViewHandler : MonoBehaviour {
 			this.activeViews.Add(view);
 		}
 
-		//this.ReplaceActiveViewWithNull();
+		this.ReplaceActiveViewWithNull();
 		View activeView = this.GetActiveView();
 		activeView.Show();
 		activeView.OnShowEvent();
@@ -203,16 +202,16 @@ public class ViewHandler : MonoBehaviour {
 		this.RearrangeOverlay();
 	}
 	
-	/*private void ReplaceActiveViewWithNull() {
+	private void ReplaceActiveViewWithNull() {
 		GameObject viewObject = this.activeViews[this.activeViews.Count - 1].gameObject;
 		NullScreen nullScreen = viewObject.AddComponent<NullScreen>();
 		View originalView = this.activeViews[this.activeViews.Count - 1];
 		nullScreen.CopyProperty(originalView);
 
-		//GameObject.Destroy(viewObject.GetComponent<Animation>());
+		GameObject.Destroy(viewObject.GetComponent<Animation>());
 		GameObject.Destroy(this.activeViews[this.activeViews.Count - 1]);
 		this.activeViews[this.activeViews.Count - 1] = nullScreen;
-	}*/
+	}
 
 	public View FindActiveView(string screenName) {
 		foreach(View view in this.activeViews) {

@@ -4,7 +4,6 @@ using System.Collections;
 /// <summary>
 /// Represents the basic user interface widget. Based from the old AScreen.
 /// 
-/// Created By: NeilDG
 /// </summary>
 public abstract class View : MonoBehaviour {
 	[SerializeField] private bool asRootScreen = false;
