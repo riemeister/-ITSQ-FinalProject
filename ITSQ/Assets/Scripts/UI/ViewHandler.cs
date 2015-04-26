@@ -156,11 +156,11 @@ public class ViewHandler : MonoBehaviour {
 	private void RearrangeOverlay() {
 		View activeView = this.GetActiveView();
 		if(activeView.isRootScreen()) {
-			//UIBlackOverlay.Hide();
+			UIBlackOverlay.Hide();
 		}
 		else {
 			UIPanel assignedPanel = activeView.GetComponent<UIPanel>();
-			//UIBlackOverlay.Show(assignedPanel);
+			UIBlackOverlay.Show(assignedPanel);
 		}
 
 	}
