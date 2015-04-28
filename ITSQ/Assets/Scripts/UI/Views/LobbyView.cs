@@ -7,4 +7,9 @@ public class LobbyView : View {
 	void Start () {
 	
 	}
+
+	public void OnClickedBack(){
+		ViewHandler.Instance.Show (ViewNames.CHARACTER_PREVIEW_PANEL_STRING);
+		this.Hide ();
+	}
 }

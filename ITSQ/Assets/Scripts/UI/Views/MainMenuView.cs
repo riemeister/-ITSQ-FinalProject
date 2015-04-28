@@ -10,4 +10,16 @@ public class MainMenuView : View {
 	void Start () {
 	
 	}
+
+	public void OnServerClicked(){
+		ViewHandler.Instance.Show (ViewNames.SERVER_PANEL_STRING);
+	}
+
+	public void OnClientClicked(){
+		ViewHandler.Instance.Show (ViewNames.CLIENT_PANEL_STRING);
+	}
+
+	public void OnQuitClicked(){
+		Application.Quit ();
+	}
 }
