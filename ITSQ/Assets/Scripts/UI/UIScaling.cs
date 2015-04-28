@@ -12,7 +12,7 @@ public class UIScaling : MonoBehaviour {
 	private const string GAME_ROOT_NAME = "GameRoot";
 	private const string BASE_OBJECT_NAME = "Base";
 
-	private const int MAX_WIDTH = 1441;
+	private const int MAX_WIDTH = 1598;
 	private const int MAX_HEIGHT = 900;
 
 	private static Vector3 computedScale = Vector3.one;
