@@ -255,8 +255,10 @@ public class ViewHandler : MonoBehaviour {
 		View activeView = this.GetActiveView();
 
 		activeView.OnBackButtonPressed();
-		if(activeView.isRootScreen() == false) {
-			activeView.Hide();
+		if (activeView.isRootScreen () == false) {
+			activeView.Hide ();
+		} else {
+			this.Show(ViewNames.QUIT_PANEL_STRING);
 		}
 	}
 
