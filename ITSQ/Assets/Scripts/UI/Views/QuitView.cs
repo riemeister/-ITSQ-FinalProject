@@ -10,6 +10,7 @@ public class QuitView : View {
 	
 	}
 
+
 	public void OnQuitButtonClicked() {
 		this.Hide ();
 	}

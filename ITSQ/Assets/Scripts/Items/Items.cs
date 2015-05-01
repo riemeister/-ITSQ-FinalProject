@@ -3,15 +3,16 @@ using System.Collections;
 
 public class Items {
 
-	private string itemName;
-	private int itemID;
+	protected string itemName;
+	protected int itemID;
+
 	public enum ItemTypes{
 		WEAPONS,
 		POTION,
 		BOOSTER
 	}
 
-	private ItemTypes itemType;
+	protected ItemTypes itemType;
 
 	public string ItemName{
 		get { return itemName; }
