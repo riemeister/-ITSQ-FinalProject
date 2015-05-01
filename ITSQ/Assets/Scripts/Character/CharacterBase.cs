@@ -3,13 +3,12 @@ using System.Collections;
 
 public class CharacterBase {
 
-	public string characterName;
-
-	public int damage;
-	public int atkspd;
-	public int def;
-	public int stamina;
-	public int health;
+	protected string characterName;
+	protected int damage;
+	protected int atkspd;
+	protected int def;
+	protected int stamina;
+	protected int health;
 
 	public string CharacterName{
 		get { return CharacterName; }
