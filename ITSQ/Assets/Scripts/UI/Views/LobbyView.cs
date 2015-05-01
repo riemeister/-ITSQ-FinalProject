@@ -12,4 +12,8 @@ public class LobbyView : View {
 		ViewHandler.Instance.Show (ViewNames.CHARACTER_PREVIEW_PANEL_STRING);
 		this.Hide ();
 	}
+
+	public void OnClickedStartGame(){
+		Application.LoadLevel ("InGame");
+	}
 }
