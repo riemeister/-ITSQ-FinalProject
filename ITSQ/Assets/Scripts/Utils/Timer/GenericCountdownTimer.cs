@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GenericCountdownTimer : MonoBehaviour {
 
@@ -9,9 +10,13 @@ public class GenericCountdownTimer : MonoBehaviour {
 	private float goalTime = 0.0f;
 	private bool countdownFinished = true;
 
+	private ArrayList actionList = new ArrayList();
+
 	// Use this for initialization
 	void Start () {
-		this.textDisplay.text = string.Format ("{0:00}:{1:00}:{2:000}", 0, 0, 0);
+		if (this.textDisplay != null) {
+			this.textDisplay.text = string.Format ("{0:00}:{1:00}:{2:000}", 0, 0, 0);
+		}
 	}
 	
 	// Update is called once per frame
@@ -30,10 +35,16 @@ public class GenericCountdownTimer : MonoBehaviour {
 				this.textDisplay.text = string.Format ("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
 			}
 		} else {
-			this.textDisplay.text = string.Format ("{0:00}:{1:00}:{2:000}", 0, 0, 0);
+			if (this.textDisplay != null) {
+				this.textDisplay.text = string.Format ("{0:00}:{1:00}:{2:000}", 0, 0, 0);
+			}
 			this.countdownFinished = true;
 			this.PerformFinishAction();
 		}
+	}
+
+	public void SetDuration(float duration) {
+		this.duration = duration;
 	}
 
 	public void StartTimer() {
@@ -41,7 +52,29 @@ public class GenericCountdownTimer : MonoBehaviour {
 		this.countdownFinished = false;
 	}
 
+	/// <summary>
+	/// Adds a function to call upon timer finish.
+	/// </summary>
+	/// <param name="action">Action.</param>
+	public void AddFinishAction(System.Action action) {
+		this.actionList.Add (action);
+	}
+
+	/// <summary>
+	/// Removes the specified function from the list of execution. 
+	/// </summary>
+	/// <param name="action">Action.</param>
+	public void RemoveFinishAction(System.Action action) {
+		if (this.actionList.Contains (action)) {
+			this.actionList.Remove(action);
+		}
+	}
+
 	public void PerformFinishAction() {
 		Debug.LogWarning ("FINISHED TIMER!");
+
+		foreach (System.Action action in this.actionList) {
+			action();
+		}
 	}
 }
