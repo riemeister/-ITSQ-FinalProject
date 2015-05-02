@@ -8,6 +8,7 @@ public class InitializeState : GameState {
 
 	public override void OnStart ()
 	{
+		EventBroadcaster.Instance.PostEvent (EventNames.ON_TRIGGER_PLAYER_SPAWN);
 		Debug.LogWarning ("Initialize state onStart()");
 	}
 

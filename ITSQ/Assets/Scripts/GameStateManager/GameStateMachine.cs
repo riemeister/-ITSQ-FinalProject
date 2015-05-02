@@ -21,23 +21,20 @@ public class GameStateMachine : MonoBehaviour {
 		END,
 	}
 
-	private Dictionary<StateType, GameState> stateTable = new Dictionary<StateType, GameState>();
+	[SerializeField] private float delayUntilStart = 1.0f;
 
+	private Dictionary<StateType, GameState> stateTable = new Dictionary<StateType, GameState>();
 	private GameState currentState;
 
 	void Awake() {
 		sharedInstance = this;
 
 		this.InitializeStateMachine ();
-		
-		//set start state
-		this.currentState = this.stateTable [StateType.INITIALIZE];
-		this.currentState.OnStart ();
 	}
 
 	// Use this for initialization
 	void Start () {
-
+		this.StartCoroutine (this.DelayStart ());
 	}
 	
 	// Update is called once per frame
@@ -50,6 +47,17 @@ public class GameStateMachine : MonoBehaviour {
 	void OnDestroy() {
 		this.currentState = null;
 		this.stateTable.Clear ();
+	}
+
+	/// <summary>
+	/// Delays the start of the machine, to give chance for other components to properly initialize.
+	/// </summary>
+	private IEnumerator DelayStart() {
+		yield return new WaitForSeconds (this.delayUntilStart);
+
+		//set start state
+		this.currentState = this.stateTable [StateType.INITIALIZE];
+		this.currentState.OnStart ();
 	}
 
 	private void InitializeStateMachine() {
