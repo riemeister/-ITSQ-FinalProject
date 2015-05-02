@@ -5,9 +5,11 @@ public class CharacterMovements : MonoBehaviour {
 
 	public float moveSpeed = 100.0f;
 
+	private CharacterController controller;
+
 	// Use this for initialization
 	void Start () {
-	
+		this.controller = this.GetComponent<CharacterController> ();
 	}
 	
 	// Update is called once per frame
@@ -15,17 +17,19 @@ public class CharacterMovements : MonoBehaviour {
 
 		if (Input.GetKey ("w")) {
 			transform.Translate((Vector3.forward) * moveSpeed * Time.deltaTime);
+			//this.controller.Move(Vector3.forward * moveSpeed * Time.deltaTime);
 		}
 		if (Input.GetKey ("s")) {
 			transform.Translate((Vector3.back) * moveSpeed * Time.deltaTime);
+			//this.controller.Move(Vector3.back * moveSpeed * Time.deltaTime);
 		}
 		if (Input.GetKey ("a")) {
 			transform.Rotate(Vector3.down * moveSpeed * Time.deltaTime);
-			//transform.Translate((Vector3.left) * moveSpeed * Time.deltaTime);
+			//this.controller.Move(Vector3.left * moveSpeed * Time.deltaTime);
 		}
 		if (Input.GetKey ("d")) {
 			transform.Rotate(Vector3.up * moveSpeed * Time.deltaTime);
-			//transform.Translate((Vector3.right) * moveSpeed * Time.deltaTime);
+			//this.controller.Move(Vector3.right * moveSpeed * Time.deltaTime);
 		}
 
 		if (Input.GetKeyDown (KeyCode.LeftShift)) {
