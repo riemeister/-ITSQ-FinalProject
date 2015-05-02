@@ -13,7 +13,7 @@ public class PostGameState : GameState {
 
 	public override void OnUpdate ()
 	{
-		Debug.LogWarning ("Post game state onUpdate()");
+
 	}
 
 	public override void OnEnd ()

@@ -13,7 +13,7 @@ public class MainGameState : GameState {
 
 	public override void OnUpdate ()
 	{
-		Debug.LogWarning ("Main game state onUpdate()");
+
 	}
 
 	public override void OnEnd ()

@@ -58,6 +58,8 @@ public class GameStateMachine : MonoBehaviour {
 		//set start state
 		this.currentState = this.stateTable [StateType.INITIALIZE];
 		this.currentState.OnStart ();
+
+		LoadManager.ReportLoadComplete ();
 	}
 
 	private void InitializeStateMachine() {

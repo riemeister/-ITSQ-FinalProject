@@ -14,7 +14,7 @@ public class InitializeState : GameState {
 
 	public override void OnUpdate ()
 	{
-		Debug.LogWarning ("Initialize state onUpdate()");
+
 	}
 
 	public override void OnEnd ()
