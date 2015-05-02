@@ -8,8 +8,8 @@ using System.Collections;
 public abstract class View : MonoBehaviour {
 	[SerializeField] private bool asRootScreen = false;
 
-	[SerializeField] private AnimationClip enterAnim;
-	[SerializeField] private AnimationClip exitAnim;
+	[SerializeField] protected AnimationClip enterAnim;
+	[SerializeField] protected AnimationClip exitAnim;
 
 	private Animation assignedAnimation;
 	private bool destroyable = true;
@@ -17,8 +17,8 @@ public abstract class View : MonoBehaviour {
 	protected bool isExiting = false;
 	protected bool cancelable = true;
 	
-	private const string CLIP_ENTER_NAME = "ClipEnter";
-	private const string CLIP_EXIT_NAME = "ClipExit";
+	protected const string CLIP_ENTER_NAME = "ClipEnter";
+	protected const string CLIP_EXIT_NAME = "ClipExit";
 
 	
 	// Use this for initialization
@@ -104,13 +104,13 @@ public abstract class View : MonoBehaviour {
 		
 	}
 	
-	private void VerifyAnimationComponent() {
+	protected void VerifyAnimationComponent() {
 		if(this.assignedAnimation == null) {
 			this.assignedAnimation = this.gameObject.AddComponent<Animation>();
 		}
 	}
 	
-	private void AttachClipIfNeeded(AnimationClip clip, string clipName) {
+	protected void AttachClipIfNeeded(AnimationClip clip, string clipName) {
 		if(this.assignedAnimation.GetClip(clipName) == null) {
 			this.assignedAnimation.AddClip(clip, clipName);
 		}

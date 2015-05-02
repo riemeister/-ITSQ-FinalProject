@@ -1,0 +1,25 @@
+﻿using UnityEngine;
+using System.Collections;
+
+/// <summary>
+/// Handles game initialization.
+/// </summary>
+public class InitializeState : GameState {
+
+	public override void OnStart ()
+	{
+		EventBroadcaster.Instance.PostEvent (EventNames.ON_TRIGGER_PLAYER_SPAWN);
+		EventBroadcaster.Instance.PostEvent (EventNames.ON_INITIALIZE_ITEM_SPAWN);
+		Debug.LogWarning ("Initialize state onStart()");
+	}
+
+	public override void OnUpdate ()
+	{
+
+	}
+
+	public override void OnEnd ()
+	{
+		Debug.LogWarning ("Initialize state onEnd()");
+	}
+}

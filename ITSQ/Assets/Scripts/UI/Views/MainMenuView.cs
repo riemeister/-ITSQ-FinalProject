@@ -11,6 +11,11 @@ public class MainMenuView : View {
 	
 	}
 
+	public void ForceStartGame() {
+		LoadManager.DismissAutomatically (false);
+		LoadManager.LoadScene (SceneNames.IN_GAME_SCENE);
+	}
+
 	public void OnServerClicked(){
 		ViewHandler.Instance.Show (ViewNames.SERVER_PANEL_STRING);
 	}
@@ -20,6 +25,6 @@ public class MainMenuView : View {
 	}
 
 	public void OnQuitClicked(){
-		Application.Quit ();
+		ViewHandler.Instance.Show (ViewNames.QUIT_PANEL_STRING);
 	}
 }
