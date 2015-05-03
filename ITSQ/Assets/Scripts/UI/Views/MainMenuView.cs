@@ -12,8 +12,7 @@ public class MainMenuView : View {
 	}
 
 	public void ForceStartGame() {
-		LoadManager.DismissAutomatically (false);
-		LoadManager.LoadScene (SceneNames.IN_GAME_SCENE);
+		LoadManager.LoadScene (SceneNames.IN_GAME_SCENE,false);
 	}
 
 	public void OnServerClicked(){
