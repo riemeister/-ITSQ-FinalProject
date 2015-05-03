@@ -26,6 +26,7 @@ public class GameHUDView : View {
 			this.countdownTimer.gameObject.SetActive(true);
 			this.countdownTimer.SetDuration(duration);
 			this.countdownTimer.StartTimer ();
+			this.countdownTimer.AddFinishAction(timedGameMode.ReportTimeFinished);
 		}
 	}
 

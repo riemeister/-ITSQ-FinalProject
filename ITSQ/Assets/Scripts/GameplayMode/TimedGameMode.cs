@@ -12,4 +12,11 @@ public class TimedGameMode : AGameMode {
 	{
 		this.modeValues [TIMED_DURATION_KEY] = 10.0f;
 	}
+
+	/// <summary>
+	/// Reports that the timed game mode has finished and resolve the results of the round.
+	/// </summary>
+	public void ReportTimeFinished() {
+		GameStateMachine.Instance.ChangeState (GameStateMachine.StateType.POST_GAME);
+	}
 }

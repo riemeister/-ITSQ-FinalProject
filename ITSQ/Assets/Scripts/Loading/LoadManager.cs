@@ -22,18 +22,12 @@ public class LoadManager : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Dismisses the loading overlay immediately after loading the level.
-	/// </summary>
-	/// <param name="flag">If set to <c>true</c> flag.</param>
-	public static void DismissAutomatically(bool flag) {
-		sharedInstance.dismissAutomatic = flag;
-	}
-
-	/// <summary>
-	/// Loads the scene.
+	/// Loads the scene. If dismissAutomatically is set to true, the loading overlay will disappear immediately once the loading is complete.
+	/// Otherwise, you would have to call ReportLoadComplete() to hide the overlay.
 	/// </summary>
 	/// <param name="sceneName">Scene name.</param>
-	public static void LoadScene(string sceneName) {
+	public static void LoadScene(string sceneName, bool dismissAutomatically) {
+		sharedInstance.dismissAutomatic = dismissAutomatically;
 		sharedInstance.StartCoroutine (sharedInstance.StartLoadSequence (sceneName));
 	}
 
