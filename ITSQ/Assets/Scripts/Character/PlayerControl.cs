@@ -62,7 +62,7 @@ public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 		}
 		
 		if (this.rotating) {
-			float rotation = Input.GetAxis("Mouse X") * this.rotationSpeed;;
+			float rotation = Input.GetAxis("Mouse X") * this.rotationSpeed;
 			transform.Rotate(0,rotation, 0);
 		}
 	}
