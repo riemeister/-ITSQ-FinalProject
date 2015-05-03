@@ -14,7 +14,7 @@ public class StatsGUI : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		GUILayout.Label (Ninja1.characterName);
+		GUILayout.Label (Ninja1.CharacterName);
 		GUILayout.Label ("Damage: " + Ninja1.Damage.ToString());
 		GUILayout.Label ("Atk Spd: " + Ninja1.AtkSpd.ToString());
 		GUILayout.Label ("Def: " + Ninja1.Def.ToString());

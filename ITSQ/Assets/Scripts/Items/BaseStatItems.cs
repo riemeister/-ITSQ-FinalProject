@@ -3,11 +3,11 @@ using System.Collections;
 
 public class BaseStatItems : Items{
 
-	private int damage;
-	private int atkspd;
-	private int def;
-	private int stamina;
-	private int health;
+	protected int damage;
+	protected int atkspd;
+	protected int def;
+	protected int stamina;
+	protected int health;
 
 	public int Damage{
 		get { return damage; }
