@@ -11,6 +11,7 @@ public class CreatePotion : MonoBehaviour {
 		createPotion ();
 		Debug.Log (newPotion.ItemName);
 		Debug.Log (newPotion.PotionType.ToString());
+		Debug.Log (newPotion.PotionEffectsID.ToString ());
 		//Debug.Log (newPotion.Health.ToString());
 		//Debug.Log (newPotion.Stamina.ToString());
 	}
@@ -23,8 +24,7 @@ public class CreatePotion : MonoBehaviour {
 	private void createPotion(){
 		newPotion = new BasePotions();
 		newPotion.ItemName = "Potion";
-		newPotion.Health = Random.Range (1,101);
-		newPotion.Stamina = Random.Range (1,101);
+		newPotion.PotionEffectsID = Random.Range (1, 101);
 		ChoosePotionType ();
 	}
 
