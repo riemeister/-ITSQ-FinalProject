@@ -4,13 +4,16 @@ using System.Collections;
 /// <summary>
 /// Game HUD view.
 /// </summary>
-public class GameHUDView : View {
+public class GameHUDView : View, IPauseCommand, IResumeCommand {
 
 	[SerializeField] GenericCountdownTimer countdownTimer;
 
 	// Use this for initialization
 	void Start () {
 		EventBroadcaster.Instance.AddObserver (EventNames.ON_INITIALIZE_GAME_HUD, this.InitializeUIBasedFromMode);
+
+		this.countdownTimer.gameObject.SetActive (false);
+		GamePauseHandler.Instance.AttachClassToVisit (this, this);
 	}
 
 	void OnDestroy() {
@@ -30,9 +33,11 @@ public class GameHUDView : View {
 		}
 	}
 
-	public override void OnShowEvent ()
-	{
-		base.OnShowEvent ();
-		this.countdownTimer.gameObject.SetActive (false);
+	public void Pause() {
+		this.countdownTimer.PauseTimer ();
+	}
+
+	public void Resume() {
+		this.countdownTimer.ResumeTimer ();
 	}
 }
