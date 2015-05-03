@@ -36,22 +36,21 @@ public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 
 	void Start() {
 		this.controller = this.GetComponent<CharacterController> ();
+
+		GamePauseHandler.Instance.AttachClassToVisit (this, this);
 	}
 	void Update() {
-
 		switch (this.currentCharacterState) {
 		case CharacterState.CONTROLLABLE:
 			this.HandleMovement();
 			this.HandleFire();
+			this.UpdateCameraView ();
 			break;
 
 		case CharacterState.RESTRICTED:
 			//do nothing
-			return;
+			break;
 		}
-
-		this.UpdateCameraView ();
-
 	}
 
 	private void UpdateCameraView() {
@@ -87,10 +86,10 @@ public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 	}
 
 	public void Pause() {
-
+		this.currentCharacterState = CharacterState.RESTRICTED;
 	}
 
 	public void Resume() {
-
+		this.currentCharacterState = CharacterState.CONTROLLABLE;
 	}
 }
