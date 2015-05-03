@@ -10,6 +10,8 @@ public class EventNames {
 
 	public const string ON_TRIGGER_PLAYER_SPAWN = "ON_TRIGGER_PLAYER_SPAWN";
 	public const string ON_INITIALIZE_ITEM_SPAWN = "ON_INITIALIZE_ITEM_SPAWN";
+
+	public const string ON_INITIALIZE_GAME_HUD = "ON_INITIALIZE_GAME_HUD";
 }
 
 
