@@ -7,7 +7,7 @@ public class QuitView : View {
 
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 
 
@@ -24,9 +24,17 @@ public class QuitView : View {
 	{
 		base.OnHideEvent ();
 
-		if(this.confirmed) {
+		if (this.confirmed) {
 			Application.Quit ();
+		} else {
+			GamePauseHandler.Instance.Resume();
 		}
 
+	}
+
+	public override void OnShowEvent ()
+	{
+		base.OnShowEvent ();
+		GamePauseHandler.Instance.Pause ();
 	}
 }

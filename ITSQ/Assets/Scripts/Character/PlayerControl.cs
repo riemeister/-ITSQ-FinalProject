@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerControl : MonoBehaviour {
+public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 
 	/// This script moves the character controller forward 
 	/// and sideways based on the arrow keys.
@@ -84,5 +84,13 @@ public class PlayerControl : MonoBehaviour {
 		if (Input.GetButtonDown ("Fire1")) {
 			Instantiate(this.weapon,transform.position,transform.rotation);
 		}
+	}
+
+	public void Pause() {
+
+	}
+
+	public void Resume() {
+
 	}
 }
