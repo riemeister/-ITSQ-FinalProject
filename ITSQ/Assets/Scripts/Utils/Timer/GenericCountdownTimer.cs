@@ -8,7 +8,11 @@ public class GenericCountdownTimer : MonoBehaviour {
 	[SerializeField] private float duration;
 
 	private float goalTime = 0.0f;
+	private float lastKnownTime = 0.0f;
+	private float currentTime = 0.0f;
+
 	private bool countdownFinished = true;
+	private bool paused = false;
 
 	private ArrayList actionList = new ArrayList();
 
@@ -21,12 +25,12 @@ public class GenericCountdownTimer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (this.countdownFinished == true)
+		if (this.countdownFinished == true || this.paused == true)
 			return;
 
-		float currentTime = Mathf.Clamp (this.goalTime - Time.time, 0, float.MaxValue);
+		this.currentTime = Mathf.Clamp (this.goalTime - Time.time, 0, float.MaxValue);
 
-		if (currentTime > 0.000f) {
+		if (this.currentTime > 0.000f) {
 			int minutes = (int) currentTime / 60;
 			int seconds = (int) currentTime % 60;
 			int milliseconds =(int) (currentTime * 100) % 100;
@@ -50,6 +54,18 @@ public class GenericCountdownTimer : MonoBehaviour {
 	public void StartTimer() {
 		this.goalTime = Time.time + duration;
 		this.countdownFinished = false;
+	}
+
+	public void PauseTimer() {
+		this.paused = true;
+		this.lastKnownTime = this.currentTime;
+	}
+
+	public void ResumeTimer() {
+		if(this.countdownFinished == false) {
+			this.paused = false;
+			this.goalTime = Time.time + this.lastKnownTime;
+		}
 	}
 
 	/// <summary>
