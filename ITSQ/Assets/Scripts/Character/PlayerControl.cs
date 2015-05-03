@@ -13,38 +13,76 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private float jumpSpeed = 200.0f;
 	[SerializeField] private float gravity = 150.0f;
 	[SerializeField] private float rotationSpeed = 10.0f;
+	[SerializeField] private GameObject weapon;
 	
 	private Vector3 moveDirection = Vector3.zero;
 	private CharacterController controller;
 
-	private bool rotateable = false;
+	private bool rotating = false;
+
+	public enum CharacterState {
+		CONTROLLABLE,
+		RESTRICTED
+	}
+
+	public enum CharacterStance {
+		NORMAL,
+		SPRINT,
+		CROUCH
+	}
+
+	private CharacterState currentCharacterState = CharacterState.CONTROLLABLE;
+	private CharacterStance currentStance = CharacterStance.NORMAL;
 
 	void Start() {
 		this.controller = this.GetComponent<CharacterController> ();
 	}
 	void Update() {
-		if (controller.isGrounded) {
-			moveDirection = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
-			moveDirection = transform.TransformDirection (moveDirection);
-			moveDirection *= speed;
-			if (Input.GetButton ("Jump"))
-				moveDirection.y = jumpSpeed;
-			
+
+		switch (this.currentCharacterState) {
+		case CharacterState.CONTROLLABLE:
+			this.HandleMovement();
+			this.HandleFire();
+			break;
+
+		case CharacterState.RESTRICTED:
+			//do nothing
+			return;
 		}
 
+		this.UpdateCameraView ();
+
+	}
+
+	private void UpdateCameraView() {
 		if (Input.GetMouseButtonDown (1)) {
-			this.rotateable = true;
+			this.rotating = true;
 		} else if (Input.GetMouseButtonUp (1)) {
-			this.rotateable = false;
+			this.rotating = false;
 		}
-
-		if (this.rotateable) {
+		
+		if (this.rotating) {
 			float rotation = Input.GetAxis("Mouse X") * this.rotationSpeed;;
 			transform.Rotate(0,rotation, 0);
 		}
+	}
 
-		moveDirection.y -= gravity * Time.deltaTime;
-		controller.Move(moveDirection * Time.deltaTime);
+	private void HandleMovement() {
+		if (this.controller.isGrounded) {
+			this.moveDirection = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+			this.moveDirection = transform.TransformDirection (moveDirection);
+			this.moveDirection *= speed;
+			if (Input.GetButton ("Jump"))
+				this.moveDirection.y = jumpSpeed;
+			
+		}
+		this.moveDirection.y -= gravity * Time.deltaTime;
+		this.controller.Move(moveDirection * Time.deltaTime);
+	}
 
+	private void HandleFire() {
+		if (Input.GetButtonDown ("Fire1")) {
+			Instantiate(this.weapon,transform.position,transform.rotation);
+		}
 	}
 }
