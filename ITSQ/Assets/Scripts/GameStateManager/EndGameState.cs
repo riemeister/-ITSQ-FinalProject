@@ -8,6 +8,7 @@ public class EndGameState : GameState {
 
 	public override void OnStart ()
 	{
+		GamePauseHandler.Instance.Cleanup ();
 		Debug.LogWarning ("End game state onStart()");
 	}
 

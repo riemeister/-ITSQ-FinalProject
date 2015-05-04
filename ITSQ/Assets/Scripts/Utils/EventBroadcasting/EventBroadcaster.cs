@@ -96,6 +96,10 @@ public class EventBroadcaster {
 		if(this.eventObservers.ContainsKey(notificationName)) {
 			ObserverList eventObserver = this.eventObservers[notificationName];
 			eventObserver.RemoveObserver(action);
+
+			if(eventObserver.GetListenerLength() == 0) {
+				this.eventObservers.Remove(notificationName);
+			}
 		}
 	}
 
