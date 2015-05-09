@@ -6,7 +6,9 @@ using System.Collections.Generic;
 /// Manages the game states properly
 /// </summary>
 public class GameStateMachine : MonoBehaviour {
+
 	private static GameStateMachine sharedInstance = null;
+
 	public static GameStateMachine Instance {
 		get {
 			return sharedInstance;
