@@ -108,6 +108,12 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 	/// </summary>
 	/// <param name="other">Other.</param>
 	private void HandleTriggerStay(Collider other) {
+
+		if (this.currentEnemyState == EnemyState.RESTRICTED) {
+			this.navMeshAgent.ResetPath();
+			return;
+		}
+
 		PlayerControl playerControl = other.gameObject.GetComponent<PlayerControl> ();
 
 		if (playerControl != null) {
