@@ -21,12 +21,13 @@ public class CreateBoosters : MonoBehaviour {
 	private void createBooster(){
 		newBooster = new BaseBoosters ();
 		newBooster.ItemName = "Booster";
-		newBooster.BoosterStatsEffectID = Random.Range (1, 101);
+		newBooster.BoosterStatsEffectID = Random.Range (1, 51);
 		ChooseBoosterType ();
 	}
 
 	private void ChooseBoosterType(){
 		int randomTemp = Random.Range (0, 3);
+		Debug.Log (randomTemp);
 		if (randomTemp == 0) {
 			newBooster.BoosterType = BaseBoosters.BoosterTypes.DAMAGE;
 		}else if (randomTemp == 1) {
