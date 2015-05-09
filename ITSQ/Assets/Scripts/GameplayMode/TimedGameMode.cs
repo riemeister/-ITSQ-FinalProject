@@ -10,7 +10,7 @@ public class TimedGameMode : AGameMode {
 	
 	public override void Configure ()
 	{
-		this.modeValues [TIMED_DURATION_KEY] = 10.0f;
+		this.modeValues [TIMED_DURATION_KEY] = 30.0f;
 	}
 
 	/// <summary>
