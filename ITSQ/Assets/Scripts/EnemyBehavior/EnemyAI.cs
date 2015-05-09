@@ -28,8 +28,9 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 	private EnemyActionType currentActionType = EnemyActionType.IDLE;
 
 	private bool playerInSight = false;
-	private float fieldOfViewAngle = 110.0f;
 	private Vector3 lastPlayerSighting = Vector3.zero;
+
+	private bool shouldWait = false;
 
 	// Use this for initialization
 	void Start () {
@@ -58,7 +59,7 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 			//do nothing
 			break;
 		case EnemyActionType.PATROLLING:
-			if(this.navMeshAgent.remainingDistance <= 5.0f) {
+			if(this.navMeshAgent.remainingDistance <= EnemyConstants.PATROL_STOPPING_DISTANCE) {
 				this.TransitionToIdle();
 			}
 			break;
@@ -98,7 +99,7 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 		PlayerControl playerControl = other.gameObject.GetComponent<PlayerControl> ();
 
 		if (playerControl != null) {
-			Debug.Log ("Player enter!");
+
 		}
 	}
 
@@ -117,7 +118,7 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 			float angle = Vector3.Angle(direction, transform.forward);
 			
 			// If the angle between forward and where the player is, is less than half the angle of view...
-			if(angle < fieldOfViewAngle * 0.5f)
+			if(angle < EnemyConstants.FIELD_OF_VIEW_ANGLE * 0.5f)
 			{
 				RaycastHit hit;
 				// ... and if a raycast towards the player hits something...
@@ -135,6 +136,13 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 
 						this.TransitionToChasing();
 						this.navMeshAgent.SetDestination(this.lastPlayerSighting);
+
+						if(this.navMeshAgent.remainingDistance <= EnemyConstants.CHASE_STOPPING_DISTANCE) {
+							this.navMeshAgent.Stop();
+						}
+						else {
+							this.navMeshAgent.Resume();
+						}
 					}
 				}
 			}
