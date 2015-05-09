@@ -8,7 +8,7 @@ public class Items {
 
 	public enum ItemTypes{
 		WEAPONS,
-		POTION,
+		POTIONS,
 		BOOSTER
 	}
 

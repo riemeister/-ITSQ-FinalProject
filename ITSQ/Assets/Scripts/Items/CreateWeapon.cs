@@ -10,6 +10,10 @@ public class CreateWeapon : MonoBehaviour {
 		createWeapon ();
 		Debug.Log (newWeapon.ItemName);
 		Debug.Log (newWeapon.WeaponType.ToString());
+		Debug.Log (newWeapon.Health.ToString());
+		Debug.Log (newWeapon.Stamina.ToString());
+		Debug.Log (newWeapon.Damage.ToString());
+		Debug.Log (newWeapon.AtkSpd.ToString());
 	}
 
 	public void createWeapon(){
@@ -20,15 +24,15 @@ public class CreateWeapon : MonoBehaviour {
 		//id
 		//newWeapon.ItemID = Random.Range (1, 7);
 		//stats
-		newWeapon.Health = Random.Range (1, 101);
-		newWeapon.Stamina = Random.Range (1, 101);
-		newWeapon.Def = Random.Range (1, 101);
-		newWeapon.Damage = Random.Range (1, 101);
-		newWeapon.AtkSpd = Random.Range (1, 101);
+		newWeapon.Health = Random.Range (1, 51);
+		newWeapon.Stamina = Random.Range (1, 51);
+		newWeapon.Def = Random.Range (1, 51);
+		newWeapon.Damage = Random.Range (1, 51);
+		newWeapon.AtkSpd = Random.Range (1, 51);
 		//choose type of weapon
 		ChooseWeaponType ();
 		//effect
-		newWeapon.WeaponEffectID = Random.Range (1, 101);
+		//newWeapon.WeaponEffectID = Random.Range (1, 101);
 	}
 
 	private void ChooseWeaponType(){
