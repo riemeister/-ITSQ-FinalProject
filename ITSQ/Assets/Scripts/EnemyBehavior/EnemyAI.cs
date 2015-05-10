@@ -65,11 +65,9 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 			break;
 		case EnemyActionType.CHASING:
 			break;
-		case EnemyActionType.SHOOTING: 
+		case EnemyActionType.SHOOTING:
 			break;
 		}
-
-		//Debug.Log ("Enemy action type: " + this.currentActionType);
 	}
 
 	/// <summary>
@@ -93,6 +91,10 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 	private void TransitionToChasing() {
 		this.currentActionType = EnemyActionType.CHASING;
 		this.navMeshAgent.speed = EnemyConstants.CHASE_SPEED;
+	}
+
+	private void TransitionToShooting() {
+		this.currentActionType = EnemyActionType.SHOOTING;
 	}
 
 	private void HandleTriggerEnter(Collider other) {
@@ -144,7 +146,9 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 						this.navMeshAgent.SetDestination(this.lastPlayerSighting);
 
 						if(this.navMeshAgent.remainingDistance <= EnemyConstants.CHASE_STOPPING_DISTANCE) {
+							Debug.LogWarning("Pew pew pew!");
 							this.navMeshAgent.Stop();
+
 						}
 						else {
 							this.navMeshAgent.Resume();
