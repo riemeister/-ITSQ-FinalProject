@@ -26,7 +26,7 @@ public class GameHUDView : View, IPauseCommand, IResumeCommand {
 			TimedGameMode timedGameMode = (TimedGameMode) gameMode;
 			float duration = (float) timedGameMode.GetModeValue(TimedGameMode.TIMED_DURATION_KEY);
 
-			//this.countdownTimer.gameObject.SetActive(true);
+			this.countdownTimer.gameObject.SetActive(true);
 			this.countdownTimer.SetDuration(duration);
 			this.countdownTimer.StartTimer ();
 			this.countdownTimer.AddFinishAction(timedGameMode.ReportTimeFinished);

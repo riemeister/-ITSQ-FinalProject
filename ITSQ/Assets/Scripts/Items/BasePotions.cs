@@ -5,7 +5,7 @@ public class BasePotions : BaseStatItems {
 
 	public enum PotionTypes{
 		HEALTH,
-		STAMINA,
+		STAMINA
 	}
 
 	private PotionTypes potionType;
