@@ -1,26 +1,55 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerHealth : MonoBehaviour {
 
-	[SerializeField] private UILabel Health_Label;
-	[SerializeField] private UILabel Stamina_Label;
+	public int startingHealth = 100;
+	public int currentHealth;	
+	public Slider healthSlider;
+	public Image damageImage;
+	public float flashSpeed = 5f;
+	public Color flashColor = new Color(1f,0f,0f,0.1f);
 
-	public float Health = 0.0f;
-	public float Stamina = 0.0f;
+	Animator anim;
+	PlayerControl playerControl;
+	PlayerStamina playerStamina;
+	bool isDead;
+	bool damaged;
 
-	void Update () {
+	void Awake(){
 
-		float HealthUpdate = Health * 100f;
-		float StaminaUpdate = Stamina * 100f;
+		anim = GetComponent<Animator> ();
+		playerControl = GetComponent<PlayerControl> ();
 
-		if (HealthUpdate >= 0 && (HealthUpdate <= 100)) {
-			GameObject.Find ("HealthBar").GetComponent<UIProgressBar> ().value = this.Health;
-			this.Health_Label.text = (HealthUpdate.ToString () + ("% Health"));
+		currentHealth = startingHealth;
+	}
+
+	void Update(){
+
+		if (damaged) {
+			damageImage.color = flashColor;
+		} else {
+			damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
 		}
-		if (StaminaUpdate >= 0 && (StaminaUpdate <= 100)) {
-			GameObject.Find ("StaminaBar").GetComponent<UIProgressBar> ().value = this.Stamina;
-			this.Stamina_Label.text = (StaminaUpdate.ToString () + ("% Stamina"));
+		damaged = false;
+	}
+
+	public void TakeDamage(int amount){
+		damaged = true;
+
+		currentHealth -= amount;
+
+		healthSlider.value = currentHealth;
+
+		if (currentHealth <= 0 && !isDead) {
+			Death();
 		}
+	}
+
+	void Death(){
+		isDead = true;
+		anim.SetTrigger ("Die");
+		playerControl.enabled = false;
 	}
 }

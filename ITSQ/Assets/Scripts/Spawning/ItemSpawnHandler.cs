@@ -13,6 +13,10 @@ public class ItemSpawnHandler : MonoBehaviour {
 
 	[SerializeField] private GenericCountdownTimer refreshTimer;
 
+	BasePotions.PotionTypes potionType;
+	BaseBoosters.BoosterTypes boosterType;
+	BaseWeapon.WeaponTypes weaponType;
+
 	private const float Y_OFFSET = 50.0f;
 
 	private ArrayList occupiedSpawnPoints = new ArrayList();
@@ -44,6 +48,10 @@ public class ItemSpawnHandler : MonoBehaviour {
 		//spawn item
 		GameObject spawnedItem = GameObject.Instantiate (this.spawnableItems [itemIndex].gameObject);
 		spawnedItem.transform.parent = this.itemsContainer;
+		
+		BasePotions.PotionTypes potionType = (BasePotions.PotionTypes)Random.Range (0,2);
+		BaseBoosters.BoosterTypes boosterType = (BaseBoosters.BoosterTypes)Random.Range (0, 3);
+		BaseWeapon.WeaponTypes weaponType = (BaseWeapon.WeaponTypes)Random.Range (0, 6);
 
 		Vector3 spawnPosition = this.spawnPoints [spawnPointIndex].position;
 		spawnPosition.y += Y_OFFSET;

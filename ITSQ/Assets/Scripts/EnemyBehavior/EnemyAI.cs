@@ -9,6 +9,15 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 	[SerializeField] private NavMeshAgent navMeshAgent;
 	[SerializeField] private Transform target;
 	[SerializeField] private EnemyTriggerRadius enemyTriggerRadius;
+	[SerializeField] private GameObject EnemyWeapon;
+
+	public float timeBetweenAttacks = 5f;
+	public int attackDamage = 5;
+
+	GameObject player;
+	//EnemyHealth enemyHealth;
+	PlayerHealth playerHealth;
+	float timer;
 
 	private Transform playerLocation;
 
@@ -32,6 +41,12 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 
 	private bool shouldWait = false;
 
+	void Awake(){
+		player = GameObject.FindGameObjectWithTag ("Player");
+		playerHealth = player.GetComponent<PlayerHealth> ();
+		//enemyHealth = GetComponent<EnemyHealth> ();
+	}
+
 	// Use this for initialization
 	void Start () {
 		this.playerLocation = GameObject.FindObjectOfType<PlayerControl> ().transform;
@@ -43,6 +58,7 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 	
 	// Update is called once per frame
 	void Update () {
+		timer += Time.deltaTime;
 		switch (this.currentEnemyState) {
 		case EnemyState.ACTIVE:
 			this.HandleEnemyAction();
@@ -144,11 +160,13 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 
 						this.TransitionToChasing();
 						this.navMeshAgent.SetDestination(this.lastPlayerSighting);
-
-						if(this.navMeshAgent.remainingDistance <= EnemyConstants.CHASE_STOPPING_DISTANCE) {
+						if(timer >= timeBetweenAttacks){
+							if(this.navMeshAgent.remainingDistance <= EnemyConstants.CHASE_STOPPING_DISTANCE) {
+							//Instantiate(this.EnemyWeapon,transform.position,transform.rotation);
+							//Attack();
 							Debug.LogWarning("Pew pew pew!");
 							this.navMeshAgent.Stop();
-
+							}
 						}
 						else {
 							this.navMeshAgent.Resume();
@@ -184,5 +202,12 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 
 	public EnemyActionType GetEnemyActionType() {
 		return this.currentActionType;
+	}
+
+	void Attack(){
+		timer = 0f;
+		if (playerHealth.currentHealth > 0) {
+			playerHealth.TakeDamage(attackDamage);
+		}
 	}
 }

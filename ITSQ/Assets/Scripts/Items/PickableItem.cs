@@ -17,6 +17,18 @@ public class PickableItem : MonoBehaviour {
 	private BasePotions potionData;
 	private BaseWeapon weaponData;
 
+	GameObject player;
+	PlayerControl playerControl;
+	PlayerHealth playerHealth;
+	PlayerStamina playerStamina;
+
+	void Awake(){
+		player = GameObject.FindGameObjectWithTag ("Player");
+		playerControl = player.GetComponent<PlayerControl> ();
+		playerHealth = player.GetComponent<PlayerHealth> ();
+		playerStamina = player.GetComponent<PlayerStamina> ();
+	}
+
 	// Use this for initialization
 	void Start () {
 		this.Initialize ();
@@ -72,14 +84,16 @@ public class PickableItem : MonoBehaviour {
 		return this.weaponData;
 	}
 
+
 	void OnTriggerEnter(Collider other){
 		Debug.Log (itemType);
 		if (itemType == Items.ItemTypes.BOOSTER) {
+			Debug.Log(boosterType);
 			if (boosterType == BaseBoosters.BoosterTypes.ATKSPD) {
-				baseStats.AtkSpd = Random.Range(0,49);
+//				baseStats.AtkSpd = Random.Range(0,49);
 			}
 			else if (boosterType == BaseBoosters.BoosterTypes.DAMAGE) {
-				baseStats.Damage = Random.Range(0,49);
+				playerControl.attackDamage += 20;
 			}
 			else if (boosterType == BaseBoosters.BoosterTypes.DEF) {
 				baseStats.Def = Random.Range(0,49);
@@ -88,19 +102,14 @@ public class PickableItem : MonoBehaviour {
 
 		if (itemType == Items.ItemTypes.POTIONS) {
 			Debug.Log(potionType);
-			if(potionType == BasePotions.PotionTypes.HEALTH){
-				baseStats.Health = Random.Range(0,49);
-			}
-			if(potionType == BasePotions.PotionTypes.STAMINA){
-				baseStats.Stamina = Random.Range(0,49);
-			}
+			playerHealth.currentHealth += 45;
+			playerStamina.currentStamina += 25;
 		}
+
 		if (itemType == Items.ItemTypes.WEAPONS) {
-			baseStats.AtkSpd = Random.Range(0,49);
-			baseStats.Damage = Random.Range(0,49);
+			playerHealth.startingHealth += Random.Range(0,49);
+			playerControl.attackDamage += Random.Range(0,49);
 			baseStats.Def = Random.Range(0,49);
-			baseStats.Health = Random.Range(0,49);
-			baseStats.Stamina = Random.Range(0,49);
 		}
 		Destroy(gameObject);
 	}
