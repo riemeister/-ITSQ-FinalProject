@@ -53,12 +53,6 @@ public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 		GamePauseHandler.Instance.AttachClassToVisit (this, this);
 	}
 
-	void FixedUpdate(){
-		float h = Input.GetAxis ("Horizontal");
-		float v = Input.GetAxis ("Vertical");
-		Animating(h,v);
-	}
-
 	void Update() {
 
 		switch (this.currentCharacterState) {
@@ -66,6 +60,10 @@ public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 			this.HandleMovement();
 			this.HandleFire();
 			this.UpdateCameraView ();
+
+			float h = Input.GetAxis ("Horizontal");
+			float v = Input.GetAxis ("Vertical");
+			Animating(h,v);
 			break;
 
 		case CharacterState.RESTRICTED:
