@@ -163,7 +163,7 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 						if(timer >= timeBetweenAttacks){
 							if(this.navMeshAgent.remainingDistance <= EnemyConstants.CHASE_STOPPING_DISTANCE) {
 							//Instantiate(this.EnemyWeapon,transform.position,transform.rotation);
-							//Attack();
+							Attack();
 							Debug.LogWarning("Pew pew pew!");
 							this.navMeshAgent.Stop();
 							}
