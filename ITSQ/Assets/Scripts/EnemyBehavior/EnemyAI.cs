@@ -84,19 +84,11 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 			//do nothing
 			break;
 		case EnemyActionType.PATROLLING:
-			isWalking = true;
-			anim.SetBool("IsWalking", isWalking);
 			if(this.navMeshAgent.remainingDistance <= EnemyConstants.PATROL_STOPPING_DISTANCE) {
-				isWalking = false;
-				anim.SetBool("IsWalking", isWalking);
 				this.TransitionToIdle();
 			}
-			isRunning = false;
-			anim.SetBool ("IsRunning", isRunning);
 			break;
 		case EnemyActionType.CHASING:
-			isRunning = true;
-			anim.SetBool ("IsRunning", isRunning);
 			break;
 		case EnemyActionType.SHOOTING:
 			break;
@@ -110,6 +102,10 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 		this.target = EnemyPatrolPointDirectory.Instance.GetRandomPatrolPoint ();
 		this.navMeshAgent.SetDestination (this.target.position);
 		this.navMeshAgent.speed = EnemyConstants.PATROL_SPEED;
+		isWalking = true;
+		anim.SetBool("IsWalking", isWalking);
+		isRunning = false;
+		anim.SetBool ("IsRunning", isRunning);
 	}
 
 	/// <summary>
@@ -124,6 +120,8 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 	private void TransitionToChasing() {
 		this.currentActionType = EnemyActionType.CHASING;
 		this.navMeshAgent.speed = EnemyConstants.CHASE_SPEED;
+		isRunning = true;
+		anim.SetBool ("IsRunning", isRunning);
 	}
 
 	private void TransitionToShooting() {
@@ -172,17 +170,24 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 						// ... the player is in sight.
 						this.playerInSight = true;
 
+						isWalking = false;
+						anim.SetBool("IsWalking", isWalking);
+
 						Debug.Log("Player can be seen by " +this.gameObject.name);
 						this.lastPlayerSighting = playerControl.transform.position;
 
 						this.TransitionToChasing();
+						isRunning = true;
+						anim.SetBool ("IsRunning", isRunning);
 						this.navMeshAgent.SetDestination(this.lastPlayerSighting);
 
 						if(this.navMeshAgent.remainingDistance <= EnemyConstants.CHASE_STOPPING_DISTANCE){
+
 							if(timer >= timeBetweenAttacks){
 								Attack();
+								this.navMeshAgent.Stop();
 							}
-							this.navMeshAgent.Stop();
+//							this.navMeshAgent.Stop();
 						}
 						else {
 							this.navMeshAgent.Resume();
