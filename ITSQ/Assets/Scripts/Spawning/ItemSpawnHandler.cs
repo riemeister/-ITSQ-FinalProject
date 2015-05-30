@@ -17,7 +17,7 @@ public class ItemSpawnHandler : MonoBehaviour {
 	BaseBoosters.BoosterTypes boosterType;
 	BaseWeapon.WeaponTypes weaponType;
 
-	private const float Y_OFFSET = 30.0f;
+	private const float Y_OFFSET = 15.0f;
 
 	private ArrayList occupiedSpawnPoints = new ArrayList();
 
