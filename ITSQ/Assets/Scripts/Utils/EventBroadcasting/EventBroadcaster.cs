@@ -2,11 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
-/*
- * Modified notification center that uses event names
- * Created By: NeilDG
- */
 public class EventBroadcaster {
 
 	private static EventBroadcaster sharedInstance;

@@ -12,7 +12,7 @@ public class MainMenuView : View {
 	}
 
 	public void ForceStartGame() {
-		LoadManager.LoadScene (SceneNames.IN_GAME_SCENE,false);
+		LoadManager.LoadScene (SceneNames.IN_GAME_SCENE, false);
 	}
 
 	public void OnServerClicked(){
@@ -24,6 +24,6 @@ public class MainMenuView : View {
 	}
 
 	public void OnQuitClicked(){
-		ViewHandler.Instance.Show (ViewNames.QUIT_PANEL_STRING);
+		Application.Quit();
 	}
 }

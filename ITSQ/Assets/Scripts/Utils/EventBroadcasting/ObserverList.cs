@@ -2,10 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/*
- * Holds the associated actions associated with the event name
- * Created By: NeilDG
- */
 public class ObserverList {
 	private List<System.Action<Parameters>> eventListeners;	//by default, event listeners with params
 	private List<System.Action> eventListenersNoParams; //event listeners that does not have params;

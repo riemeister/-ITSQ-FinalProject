@@ -2,12 +2,16 @@
 using System.Collections;
 
 public class EnemyWeapon : MonoBehaviour {
-	public float speed = 20.0f;
-	private PlayerHealth playerHealth;
-	
+	public float speed = 10.0f;
+	public int attackDamage = 20;
+
+	GameObject player;
+	PlayerHealth playerHealth;
 	// Use this for initialization
 	void Start () {
 		this.StartCoroutine (this.DelayDestroy ());
+		player = GameObject.FindGameObjectWithTag ("Player");
+		playerHealth = player.GetComponent<PlayerHealth> ();
 	}
 	
 	// Update is called once per frame
@@ -23,6 +27,9 @@ public class EnemyWeapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "Player") {
+			if (playerHealth.currentHealth > 0) {
+				playerHealth.TakeDamage(attackDamage);
+			}
 			Destroy(gameObject);
 		}
 	}

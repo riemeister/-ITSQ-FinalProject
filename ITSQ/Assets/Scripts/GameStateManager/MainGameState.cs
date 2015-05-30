@@ -8,6 +8,7 @@ public class MainGameState : GameState {
 
 	public override void OnStart ()
 	{
+		//LoadManager.ReportLoadComplete ();
 		Debug.LogWarning ("Main game state onStart()");
 	}
 

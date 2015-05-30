@@ -3,21 +3,35 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 
+	private static PlayerControl sharedInstance = null;
+	public static  PlayerControl Instance {
+		get {
+			return sharedInstance;
+		}
+	}
 	/// This script moves the character controller forward 
 	/// and sideways based on the arrow keys.
 	/// It also jumps when pressing space.
 	/// Make sure to attach a character controller to the same game object.
 	/// It is recommended that you make only one call to Move or SimpleMove per frame.	
 	
-	[SerializeField] private float speed = 100.0f;
+
 	[SerializeField] private float jumpSpeed = 150.0f;
 	[SerializeField] private float gravity = 500.0f;
 	[SerializeField] private float rotationSpeed = 10.0f;
 
-	public int attackDamage = 20;
+	public GameObject Weapon;
+	
+	public int startingDamage = 20;
+	public int currentDamage;
 
+	public int startingDefense = 10;
+	public int currentDefense;
+
+	public float speed = 20.0f;
+
+	Transform WeaponSpawn;
 	Animator anim;
-	Rigidbody playerRigidBody;
 	GameObject player;
 	PlayerStamina playerStamina;
 
@@ -40,12 +54,18 @@ public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 	private CharacterState currentCharacterState = CharacterState.CONTROLLABLE;
 	private CharacterStance currentStance = CharacterStance.NORMAL;
 
+	public Vector3 GetWorldPosition() {
+		return this.transform.position;
+	}
+
 	void Awake(){
+		sharedInstance = this;
+		currentDamage = startingDamage;
+		currentDefense = startingDefense;
 		anim = GetComponent<Animator> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerStamina = player.GetComponent<PlayerStamina> ();
-		playerRigidBody = GetComponent<Rigidbody> ();
-
+		WeaponSpawn = transform.Find ("WeaponSpawn");
 	}
 
 	void Start() {
@@ -71,7 +91,6 @@ public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 			break;
 		}
 	}
-
 	private void UpdateCameraView() {
 		if (Input.GetMouseButtonDown (1)) {
 			this.rotating = true;
@@ -84,8 +103,18 @@ public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 			transform.Rotate(0,rotation, 0);
 		}
 	}
+
 	private void HandleMovement() {
 		if (this.controller.isGrounded) {
+//			if(Input.GetKeyDown ("w")){
+//				transform.forward = new Vector3(0,0,1f * Time.deltaTime);
+//			} else if(Input.GetKeyDown ("s")){
+//				transform.forward = new Vector3(0,0,-1f * Time.deltaTime);
+//			} else if(Input.GetKeyDown ("a")){
+//				transform.forward = new Vector3(-1f * Time.deltaTime,0,0);
+//			} else if(Input.GetKeyDown ("d")){
+//				transform.forward = new Vector3(1f * Time.deltaTime,0,0);
+//			}
 			this.moveDirection = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
 			this.moveDirection = transform.TransformDirection (moveDirection);
 			this.moveDirection *= speed;
@@ -93,16 +122,16 @@ public class PlayerControl : MonoBehaviour, IPauseCommand, IResumeCommand {
 				this.moveDirection.y = jumpSpeed;	
 		}
 		this.moveDirection.y -= gravity * Time.deltaTime;
-		this.controller.Move(moveDirection * Time.deltaTime);
+		this.controller.Move (moveDirection * Time.deltaTime);
 	}
 
 	public void HandleFire() {
-		if (Input.GetButton ("Fire1")) {
+		if (Input.GetButtonDown("Fire1")) {
 			bool attack = true;
 			anim.SetBool ("IsAttacking", attack);
-			//Instantiate (this.weapon, transform.position, transform.rotation);
-			playerStamina.currentStamina -= 0.5f;
-		} else {
+			playerStamina.currentStamina -= 5f;
+			Instantiate(Weapon,WeaponSpawn.position, WeaponSpawn.rotation);
+		} else if (Input.GetButtonUp ("Fire1")){
 			bool attack = false;
 			anim.SetBool("IsAttacking", attack);
 		}

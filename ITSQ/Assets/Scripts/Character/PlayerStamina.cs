@@ -8,11 +8,10 @@ public class PlayerStamina : MonoBehaviour {
 	public float currentStamina;
 	public float staminaRegen = 10f;
 	public Slider staminaSlider;
-	
-	PlayerControl playerControl;
+
+
 
 	void Awake(){
-		playerControl = GetComponent<PlayerControl> ();
 		currentStamina = startingStamina;
 	}
 

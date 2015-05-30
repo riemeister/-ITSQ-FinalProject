@@ -11,15 +11,22 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 	[SerializeField] private EnemyTriggerRadius enemyTriggerRadius;
 	[SerializeField] private GameObject EnemyWeapon;
 
-	public float timeBetweenAttacks = 5f;
-	public int attackDamage = 5;
+	public float timeBetweenAttacks = 1f;
+//	public int attackDamage = 5;
 
+	Animator anim;
 	GameObject player;
-	//EnemyHealth enemyHealth;
+	Transform WeaponSpawn;
 	PlayerHealth playerHealth;
 	float timer;
 
+	bool shooting;
+	bool isWalking;
+	bool isRunning;
+	bool isAttacking;
+
 	private Transform playerLocation;
+	private CapsuleCollider col;
 
 	public enum EnemyState {
 		ACTIVE,
@@ -42,9 +49,11 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 	private bool shouldWait = false;
 
 	void Awake(){
+		anim = GetComponent<Animator> ();
+		col = GetComponent<CapsuleCollider>();
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerHealth = player.GetComponent<PlayerHealth> ();
-		//enemyHealth = GetComponent<EnemyHealth> ();
+		WeaponSpawn = transform.Find ("WeaponSpawn");
 	}
 
 	// Use this for initialization
@@ -75,11 +84,19 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 			//do nothing
 			break;
 		case EnemyActionType.PATROLLING:
+			isWalking = true;
+			anim.SetBool("IsWalking", isWalking);
 			if(this.navMeshAgent.remainingDistance <= EnemyConstants.PATROL_STOPPING_DISTANCE) {
+				isWalking = false;
+				anim.SetBool("IsWalking", isWalking);
 				this.TransitionToIdle();
 			}
+			isRunning = false;
+			anim.SetBool ("IsRunning", isRunning);
 			break;
 		case EnemyActionType.CHASING:
+			isRunning = true;
+			anim.SetBool ("IsRunning", isRunning);
 			break;
 		case EnemyActionType.SHOOTING:
 			break;
@@ -160,13 +177,12 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 
 						this.TransitionToChasing();
 						this.navMeshAgent.SetDestination(this.lastPlayerSighting);
-						if(timer >= timeBetweenAttacks){
-							if(this.navMeshAgent.remainingDistance <= EnemyConstants.CHASE_STOPPING_DISTANCE) {
-							//Instantiate(this.EnemyWeapon,transform.position,transform.rotation);
-							Attack();
-							Debug.LogWarning("Pew pew pew!");
-							this.navMeshAgent.Stop();
+
+						if(this.navMeshAgent.remainingDistance <= EnemyConstants.CHASE_STOPPING_DISTANCE){
+							if(timer >= timeBetweenAttacks){
+								Attack();
 							}
+							this.navMeshAgent.Stop();
 						}
 						else {
 							this.navMeshAgent.Resume();
@@ -205,9 +221,12 @@ public class EnemyAI : MonoBehaviour, IPauseCommand, IResumeCommand {
 	}
 
 	void Attack(){
+		shooting = true;
 		timer = 0f;
-		if (playerHealth.currentHealth > 0) {
-			playerHealth.TakeDamage(attackDamage);
-		}
+		isAttacking = true;
+		anim.SetBool ("IsAttacking", isAttacking);
+		float fractionalDistance = (col.radius - Vector3.Distance(transform.position, playerLocation.position)) / col.radius;
+		Instantiate(this.EnemyWeapon,WeaponSpawn.position,WeaponSpawn.rotation);
+		Vector3 playerPosition = PlayerControl.Instance.GetWorldPosition ();
 	}
 }

@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerHealth : MonoBehaviour {
 
 	public int startingHealth = 100;
-	public int currentHealth;	
+	public int currentHealth;
 	public Slider healthSlider;
 	public Image damageImage;
 	public float flashSpeed = 5f;
@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void Update(){
-
+		
 		if (damaged) {
 			damageImage.color = flashColor;
 		} else {

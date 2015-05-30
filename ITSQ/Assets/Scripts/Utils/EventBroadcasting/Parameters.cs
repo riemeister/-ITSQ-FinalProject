@@ -2,12 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/*
- * Data model that holds parameters to be passed alongside observer functions
- * 
- * Structured similary to Android's Intent class.
- * Created By: NeilDG
- */
 public class Parameters {
 
 	//basic supported parcelable types

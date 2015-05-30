@@ -10,6 +10,10 @@ public class QuitView : View {
 
 	}
 
+	public void OnMainMenuClicked(){
+		LoadManager.LoadScene (SceneNames.MAIN_MENU_SCENE, true);
+	}
+
 
 	public void OnQuitButtonClicked() {
 		this.Hide ();
